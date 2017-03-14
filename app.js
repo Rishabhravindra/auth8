@@ -1,9 +1,22 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var session = require('express-session');
+
 var app = express();
 
+// use sessions for tracking logins
+app.use(session( {
+	secret: 'Rishu lives in a tree',
+	resave: true,
+	saveUninitialized: false
+}))
 
+// make user ID available in templates
+app.use(function(req,res,next) {
+	res.locals.currentUser = req.session.userId;
+	next();
+})
 //mongodb connection
 mongoose.connect("mongodb://localhost:27017/bookworm");
 var db = mongoose.connection;
