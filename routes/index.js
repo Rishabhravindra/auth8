@@ -3,8 +3,14 @@ var router = express.Router();
 
 // GET /register
 router.get('/register', function(req,res,next) {
-	return res.send('Register Now!');
+	return res.render('register', {title: 'Register'});
 });
+
+//POST /register
+router.post('/register', function(req, res, next) {
+	return res.send('You have registered!');
+})
+
 // GET /
 router.get('/', function(req, res, next) {
   return res.render('index', { title: 'Home' });
