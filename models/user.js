@@ -27,7 +27,7 @@ var UserSchema = new mongoose.Schema(
 // authenticate input against database
 UserSchema.statics.authenticate = function(email, password, callback) {
 	User.findOne({email: email})
-		.exec(function (email,user) {
+		.exec(function (error,user) {
 			if(error) {
 				return callback(error);
 			}
@@ -38,7 +38,7 @@ UserSchema.statics.authenticate = function(email, password, callback) {
 			}
 			bcrypt.compare(password, user.password, function(error, result) {
 				if ( result === true) {
-					return (null, user);
+					return callback(null, user);
 				}
 				else {
 					return callback();
